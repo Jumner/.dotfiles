@@ -2,4 +2,4 @@
 sh $HOME/.screenlayout/monitor.sh
 screen -dmS nitrogen nitrogen --restore
 screen -dmS picom picom
-screen -dmS polybar sh $HOME/.config/polybar/launch.sh
+sh $HOME/.config/polybar/launch.sh
