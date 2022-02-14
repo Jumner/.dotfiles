@@ -70,7 +70,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found sudo colorize rust ssh-agent)
+plugins=(git command-not-found sudo colorize rust)
 # ssh-agent
 
 source $ZSH/oh-my-zsh.sh
@@ -108,6 +108,6 @@ autoload -U compinit; compinit
 # Starship
 eval "$(starship init zsh)"
 # Ssh agent
-#eval "$(ssh-agent -s)"
+eval "$(ssh-agent -s)"
 # Clear up garbage
 clear

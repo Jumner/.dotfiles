@@ -53,7 +53,7 @@ modules-center = xwindow
 modules-right = pulseaudio eth date time
 
 tray-position = right
-tray-padding = 2
+;tray-padding = 2
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -212,10 +212,10 @@ label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = reboot
 menu-0-0-foreground = ${colors.secondary}
-menu-0-0-exec = sudo reboot
+menu-0-0-exec = reboot
 menu-0-1 = power off
 menu-0-1-foreground = ${colors.secondary}
-menu-0-1-exec = sudo poweroff
+menu-0-1-exec = poweroff
 
 [settings]
 screenchange-reload = true
