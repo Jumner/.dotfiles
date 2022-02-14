@@ -3,6 +3,17 @@ window:
     x: 20
     y: 20
 
+font:
+  normal:
+    family: SFMono
+    style: Regular
+  bold:
+    family: SFMono
+    style: Bold
+  italic:
+    family: SFMono
+    style: Italic
+
 colors:
   # Default colors
   primary:

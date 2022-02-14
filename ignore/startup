@@ -3,3 +3,4 @@ sh $HOME/.screenlayout/monitor.sh
 screen -dmS nitrogen nitrogen --restore
 screen -dmS picom picom
 sh $HOME/.config/polybar/launch.sh
+kdeconnect-indicator &
