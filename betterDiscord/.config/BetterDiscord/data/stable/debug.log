@@ -1,0 +1,24 @@
+
+
+================= Starting Debug Log (2022-02-17 22:14:26.907) =================
+[2022-02-17 22:14:26.913][CONSOLE:ERROR] [Emotes] Failed to download emotes.
+
+ Client network socket disconnected before secure TLS connection was established
+Error: Client network socket disconnected before secure TLS connection was established
+    at connResetException (internal/errors.js:607:14)
+    at TLSSocket.onConnectEnd (_tls_wrap.js:1544:19)
+    at TLSSocket.emit (events.js:327:22)
+    at endReadableNT (internal/streams/readable.js:1327:12)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+[2022-02-17 22:14:26.969][CONSOLE:LOG] [BetterDiscord] [Emotes] TwitchGlobal
+[2022-02-17 22:14:26.970][CONSOLE:LOG] [BetterDiscord] [Emotes] Failed to load emotes.
+[2022-02-17 22:14:29.305][CONSOLE:LOG] [BetterDiscord] [DebugLogs] Disabled
+
+
+================= Ending Debug Log (2022-02-17 22:14:29.306) =================
+
+================= Starting Debug Log (2022-02-17 22:14:30.135) =================
+[2022-02-17 22:14:30.838][CONSOLE:LOG] [BetterDiscord] [DebugLogs] Disabled
+
+
+================= Ending Debug Log (2022-02-17 22:14:30.838) =================

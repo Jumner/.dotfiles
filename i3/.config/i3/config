@@ -59,6 +59,8 @@ bindsym $mod+Escape kill
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # -b bottom, -i case_insensitive
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b -i"
+# Swaync notifications
+bindsym $mod+Shift+n exec swaync-client -t -sw
 
 # change focus
 bindsym $mod+h focus left

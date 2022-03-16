@@ -2,5 +2,8 @@
 sh $HOME/.screenlayout/monitor.sh
 screen -dmS nitrogen nitrogen --restore
 screen -dmS picom picom
+screen -dmS dunst dunst
+screen -dmS kde kdeconnect-indicator &
+screen -dmS discord discord --start-minimized
 sh $HOME/.config/polybar/launch.sh
-kdeconnect-indicator &
+setxkbmap colemakdh

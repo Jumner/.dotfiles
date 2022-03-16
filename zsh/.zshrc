@@ -111,3 +111,4 @@ eval "$(starship init zsh)"
 eval "$(ssh-agent -s)"
 # Clear up garbage
 clear
+source /usr/share/nvm/init-nvm.sh
