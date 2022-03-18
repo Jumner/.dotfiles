@@ -7,3 +7,4 @@ screen -dmS kde kdeconnect-indicator &
 screen -dmS discord discord --start-minimized
 sh $HOME/.config/polybar/launch.sh
 setxkbmap colemakdh
+redshift -b 1.0:0.7 -l 43.5:-79.7 -t 6500:6500
