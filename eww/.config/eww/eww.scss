@@ -1,0 +1,147 @@
+* {
+	all: unset;
+	border-radius: 20px;
+}
+$iconsize: 30px;
+
+$dark: #1E2127;
+$light: #333333;
+$text: #FFFFFF;
+
+$red: #E06C75;
+$green: #98C379;
+$yellow: #D19A66;
+$blue: #61AFEF;
+$magenta: #C678DD;
+$cyan: #56B6C2;
+
+// Misc bar stuff
+.bar {
+	margin: 15px 15px 0 15px;
+	background-color: $dark;
+	color: $text;
+}
+
+// Left stuff
+
+// Powermenu
+.powermenu {
+	margin-right: 20px;
+}
+// Buttons
+button.off-button {
+	font-family: feather;
+	color: $red;
+}
+button.off-button:hover {
+	color: white;
+	background-color: $red;
+}
+button.reboot-button {
+	color: $yellow;
+}
+button.reboot-button:hover {
+	color: white;
+	background-color: $yellow;
+}
+
+// Workspaces
+.workspaces {
+	font-weight: bold;
+}
+.workspaces:hover {
+	color: $blue;
+}
+
+// Middle stuff
+
+// Focused window title
+.focus {
+	font-weight: bold;
+	font-size: 18px;
+	color: $blue;
+}
+
+.left, .right, .focus {
+	// background-color: red;
+}
+.right {
+	padding-right: 20px;
+}
+
+// Right stuff
+
+// Volume
+.volume {
+	font-size: $iconsize;
+	color: $green;
+}
+.volume-inner {
+	margin-right: 30px;
+}
+.volume scale trough {
+	min-height: 10px;
+	min-width: 150px;
+	margin-right: 0;
+}
+.volume scale trough highlight {
+	border-radius: 10px;
+	background-color: $green;
+}
+// System
+.cpu scale trough highlight {
+	background-color: $cyan;
+}
+.cpu scale slider {
+	background-color: $cyan;
+}
+.ram scale trough highlight {
+	background-color: $magenta;
+}
+.ram scale slider {
+	background-color: $magenta;
+}
+.cpu, .ram {
+	font-size: $iconsize;
+}
+// Time
+.time {
+	color: $blue;
+	font-weight: bold;
+	font-size: 18px;
+}
+.timebox:hover {
+	color: $green;
+}
+.day {
+	margin-left: 20px;
+}
+
+// General
+
+button {
+	color: $text;
+	background-color: $light;
+	margin: 5px;
+	min-width: 30px;
+}
+button:hover {
+	background-color: $green;
+}
+
+scale trough {
+	background-color: $light;
+	border-radius: 10px;
+	min-height: 8px;
+	min-width: 50px;
+	margin-right: 20px;
+	margin-left: 10px;
+}
+scale trough highlight {
+	border-radius: 10px 0 0 10px;
+}
+
+.metric scale slider{
+	min-width: 8px;
+	min-height: 8px;
+}

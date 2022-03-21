@@ -5,6 +5,7 @@ screen -dmS picom picom
 screen -dmS dunst dunst
 screen -dmS kde kdeconnect-indicator &
 screen -dmS discord discord --start-minimized
-sh $HOME/.config/polybar/launch.sh
+screen -dmS eww eww daemon
+eww open-many bar-left bar-middle bar-right
 setxkbmap colemakdh
 redshift -b 1.0:0.7 -l 43.5:-79.7 -t 6500:6500

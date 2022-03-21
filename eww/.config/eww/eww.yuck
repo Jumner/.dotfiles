@@ -1,0 +1,221 @@
+(defvar eww "eww")
+(defvar show_date false)
+	(defpoll time
+	 :interval "1s"
+	 :run-while "${!show_date}"
+	 `date +%H:%M:%S`)
+	(defpoll date
+	 :interval "1s"
+	 :run-while show_date
+	 `date +%A"  "%B"  "%d", "%Y`)
+	(defpoll day
+	 :interval "60s"
+	 `date +%d`)
+
+
+	(defwidget time []
+	 (box
+		:class "time"
+		:spacing 20
+		:orientation "h"
+		:space-evenly false
+		(box :class "day" day)
+		(eventbox
+		 :class "timebox"
+		 :onhover "${eww} update show_date=true"
+		 :onhoverlost "${eww} update show_date=false"
+		 :cursor "pointer"
+		 (box
+			:orientation "v"
+			:valign "center"
+			:space-evenly false
+			(revealer :reveal {!show_date}
+			 :duration "500ms"
+			 :transition "slideup"
+			 time)
+			(revealer :reveal {show_date}
+			 :duration "500ms"
+			 :transition "slideup"
+			 date))
+		)
+		)
+		)
+
+		(defwidget day []
+		 day
+		)
+		(defwidget workspace-button [?workspace]
+		 (button :class "workspace-button" :onclick "./interface set -w ${workspace}" "${workspace}"))
+(defvar workspace false)
+	(defwidget workspaces []
+	 (eventbox :class "workspaces"
+		:onhover "${eww} update workspace=true"
+		:onhoverlost "${eww} update workspace=false"
+		(box
+		 :orientation "h"
+		 :space-evenly false
+		 :vexpand false
+		 :tooltip "Change Workspaces"
+		 "Workspaces"
+		 (revealer
+			:transition "slideright"
+			:reveal workspace
+			(box
+			 :orientation "h"
+			 :space-evenly false
+			 (workspace-button :workspace "1")
+			 (workspace-button :workspace "2")
+			 (workspace-button :workspace "3")
+			 (workspace-button :workspace "4")
+			 (workspace-button :workspace "5")
+			)
+		 ))))
+(defvar power false)
+	(defwidget power-menu []
+	 (eventbox	:onhover "${eww} update power=true"
+		:onhoverlost "${eww} update power=false"
+		(box		:orientation "h"
+		 :space-evenly "false"
+		 :vexpand "false"
+		 :class "powermenu"
+		 (button		:class "off-button"
+			:tooltip "Shutdown"
+			:onclick "shutdown now"	"")
+		 (revealer	:transition "slideright"
+			:reveal power
+			:duration "550ms"
+			(box		:orientation "h"
+			 :space-evenly "false"
+			 (button		:class "reboot-button"
+				:tooltip "Reboot"
+				:onclick "reboot"	"")
+			)))))
+
+				(defpoll volume
+				 :interval "1s"
+				 "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{print $2}' | tr -d '%'")
+(defvar show-volume false)
+	(defwidget volume[]
+	 (eventbox :class "volume"
+		:onhover "${eww} update show-volume=true"
+		:onhoverlost "${eww} update show-volume=false"
+		:orientation "h"
+		:space-evenly false
+		(box :class "volume-inner"
+		 :space-evenly false
+		 ""
+		 (revealer :reveal {show-volume}
+			:duration "500ms"
+			:transition "slideright"
+			(scale
+			 :value volume
+			 :onchange "amixer -D pulse sset Master {}%"
+			 :orientation "h"
+			 :tooltip " ${volume}%"
+			 :min 0.0
+			 :max 100.0
+			)
+		 )
+		)
+		)
+		)
+
+		(defpoll focused-window
+		 :interval "1s"
+		 "ps -p $(xdotool getwindowfocus getwindowpid) -o comm=")
+
+		(defwidget focus []
+		 (box
+			:class "focus"
+			focused-window
+
+		 ))
+
+		(defwidget metric [value ?label class]
+		 (box :class "metric ${class}"
+			:orientation "h"
+			:space-evenly false
+			(box label)
+			(scale
+			 :min 0
+			 :max 100
+			 :value value)))
+		(defpoll internet
+		 :interval "60s"
+		 "./internet")
+		(defwidget net[]
+		 {internet ? "" : ""}
+		)
+		(defwidget sys []
+		 (box
+			:space-evenly false
+			(metric :value {EWW_RAM.used_mem_perc} :label "" :class "ram")
+			(metric :value {EWW_CPU.avg} :label "" :class "cpu")
+			(net)
+		 ))
+
+		(defwidget bar [?gap border-radius monitor]
+		 (centerbox
+			:class "bar"
+			:width "${1920-2*gap}"
+			:height "40"
+			(box :class "left"
+			 :space-evenly false
+			 (power-menu)
+			 (workspaces)
+			)
+			(focus)
+			(box :class "right"
+			 :space-evenly false
+			 :halign "end"
+			 (volume)
+			 (sys)
+			 (time)
+			)
+		 )
+		)
+
+		 (defwindow bar-left
+			:monitor 1
+			:geometry (geometry
+				:x "0px"
+				:y "0px"
+				:width "100%"
+				:height "55px"
+				:anchor "top center")
+			:stacking "fg"
+			:reserve (struts :distance "55px" :side "top")
+			:windowtype "dock"
+			:wm-ignore false
+			(bar :gap 15 :border-radius 20 :monitor 1)
+		 )
+
+		 (defwindow bar-middle
+			:monitor 0
+			:geometry (geometry
+				:x "0px"
+				:y "0px"
+				:width "100%"
+				:height "55px"
+				:anchor "top center")
+			:stacking "fg"
+			:reserve (struts :distance "55px" :side "top")
+			:windowtype "dock"
+			:wm-ignore false
+			(bar :gap 15 :border-radius 20 :monitor 0)
+		 )
+
+		 (defwindow bar-right
+			:monitor 2
+			:geometry (geometry
+				:x "0px"
+				:y "0px"
+				:width "100%"
+				:height "55px"
+				:anchor "top center")
+			:stacking "fg"
+			:reserve (struts :distance "55px" :side "top")
+			:windowtype "dock"
+			:wm-ignore false
+			(bar :gap 15 :border-radius 20 :monitor 2)
+		 )

@@ -112,3 +112,4 @@ eval "$(ssh-agent -s)"
 # Clear up garbage
 clear
 source /usr/share/nvm/init-nvm.sh
+PF_INFO="ascii title os host kernel uptime memory shell wm" PF_COL3=2 pfetch

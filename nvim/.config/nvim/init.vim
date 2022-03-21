@@ -8,7 +8,7 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'terrortylor/nvim-comment'
-Plug 'tanvirtin/vgit.nvim'
+" Plug 'tanvirtin/vgit.nvim'
 " Tabs
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
@@ -38,7 +38,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'Chiel92/vim-autoformat'
-Plug 'ray-x/lsp_signature.nvim'
+" Plug 'ray-x/lsp_signature.nvim'
 call plug#end()
 
 " Sets
@@ -228,8 +228,8 @@ sources = {
 EOF
 
 lua << EOF
-require('vgit').setup() -- Git Gutter
-require "lsp_signature".setup({})
+--require('vgit').setup() -- Git Gutter
+--require "lsp_signature".setup({})
 require('nvim_comment').setup()
 require('indent_blankline').setup({
 show_current_context = true,
