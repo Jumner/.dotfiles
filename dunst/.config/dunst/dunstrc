@@ -150,7 +150,7 @@ width = (30, 600)
 #   %n  progress value if set without any extra characters
 #   %%  Literal %
 # Markup is allowed
-	format = "%a\n<b>%s</b>\n%b"
+	format = "<b>%s</b>\n%b"
 
 # Alignment of message text.
 # Possible values are "left", "center" and "right".
@@ -273,9 +273,9 @@ width = (30, 600)
 # * context_all: Open context menu for all notifications.
 # These values can be strung together for each mouse event, and
 # will be executed in sequence.
-	mouse_left_click = close_current
-	mouse_middle_click = do_action, close_current
-	mouse_right_click = close_all
+	mouse_left_click = do_action, close_current
+	mouse_middle_click = close_all
+	mouse_right_click = close_current
 
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.
@@ -317,7 +317,7 @@ width = (30, 600)
 	default_icon = face-angel
 	background = "#61AFEF"
 	foreground = "#FFFFFF"
-	appname = kdeconnect
+	appname = KDE Connect
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
 #

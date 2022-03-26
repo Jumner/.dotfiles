@@ -1,4 +1,5 @@
-(defvar eww "eww")
+(defvar icons "/usr/share/icons/ePapirus-Dark/")
+	(defvar eww "eww")
 (defvar show_date false)
 	(defpoll time
 	 :interval "1s"
@@ -29,14 +30,14 @@
 			:orientation "v"
 			:valign "center"
 			:space-evenly false
-			(revealer :reveal {!show_date}
-			 :duration "500ms"
-			 :transition "slideup"
-			 time)
 			(revealer :reveal {show_date}
 			 :duration "500ms"
-			 :transition "slideup"
-			 date))
+			 :transition "slidedown"
+			 date)
+			(revealer :reveal {!show_date}
+			 :duration "500ms"
+			 :transition "slidedown"
+			 time))
 		)
 		)
 		)
@@ -45,7 +46,7 @@
 		 day
 		)
 		(defwidget workspace-button [?workspace]
-		 (button :class "workspace-button" :onclick "./interface set -w ${workspace}" "${workspace}"))
+		 (button :class "workspace-button" :onclick "scripts/./interface set -w ${workspace}" "${workspace}"))
 (defvar workspace false)
 	(defwidget workspaces []
 	 (eventbox :class "workspaces"
@@ -78,17 +79,23 @@
 		 :space-evenly "false"
 		 :vexpand "false"
 		 :class "powermenu"
-		 (button		:class "off-button"
-			:tooltip "Shutdown"
-			:onclick "shutdown now"	"")
+		 (button		:class "sus"
+			:tooltip "Application Menu"
+			:onclick "alacritty"
+			(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/among-us.svg"))
 		 (revealer	:transition "slideright"
 			:reveal power
 			:duration "550ms"
 			(box		:orientation "h"
 			 :space-evenly "false"
+			 (button :class "off-button"
+				:tooltip "Shutdown"
+				:onclick "shutdown now"
+				(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/system-shutdown.svg"))
 			 (button		:class "reboot-button"
 				:tooltip "Reboot"
-				:onclick "reboot"	"")
+				:onclick "reboot"
+				(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/system-reboot.svg"))
 			)))))
 
 				(defpoll volume
@@ -142,9 +149,9 @@
 			 :value value)))
 		(defpoll internet
 		 :interval "60s"
-		 "./internet")
+		 "scripts/internet")
 		(defwidget net[]
-		 {internet ? "" : ""}
+		 (image :path {internet ? "/usr/share/icons/ePapirus-Dark/32x32/status/online.svg" : "/usr/share/icons/ePapirus-Dark/32x32/status/offline.svg"})
 		)
 		(defwidget sys []
 		 (box
@@ -219,3 +226,15 @@
 			:wm-ignore false
 			(bar :gap 15 :border-radius 20 :monitor 2)
 		 )
+
+		 (defwindow main-panel
+			:monitor 0
+			:geometry (geometry
+				:x "0px"
+				:y "0px"
+				:width "100px"
+				:height "100px"
+				)
+			:stacking "fg"
+			:wm-ignore true
+			"hey")
