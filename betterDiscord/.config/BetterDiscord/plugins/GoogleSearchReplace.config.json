@@ -1,24 +1,26 @@
 {
-	"engines": {
-		"Ask": false,
-		"Bing": false,
-		"DogPile": false,
-		"DuckDuckGo": true,
-		"Ecosia": false,
-		"GitHub": true,
-		"Google": false,
-		"GoogleScholar": false,
-		"Quora": false,
-		"Qwant": false,
-		"Searx": false,
-		"StackOverflow": true,
-		"Startpage": false,
-		"UrbanDictionary": true,
-		"Whoogle": false,
-		"WolframAlpha": true,
-		"Yahoo": false,
-		"Yandex": false,
-		"YouTube": true,
-		"_all": true
+	"all": {
+		"engines": {
+			"Ask": false,
+			"Bing": false,
+			"DogPile": false,
+			"DuckDuckGo": true,
+			"Ecosia": false,
+			"GitHub": true,
+			"Google": false,
+			"GoogleScholar": false,
+			"Quora": false,
+			"Qwant": false,
+			"Searx": false,
+			"StackOverflow": true,
+			"Startpage": false,
+			"UrbanDictionary": true,
+			"Whoogle": false,
+			"WolframAlpha": true,
+			"Yahoo": false,
+			"Yandex": false,
+			"YouTube": true,
+			"_all": true
+		}
 	}
 }

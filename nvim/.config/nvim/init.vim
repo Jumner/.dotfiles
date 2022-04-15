@@ -48,7 +48,8 @@ set termguicolors
 set completeopt=menuone,noinsert,noselect,preview
 set shortmess+=c
 
-set number " Line numbers
+set number relativenumber " Line numbers
+
 " Turn off backup
 set nobackup
 set noswapfile
@@ -96,6 +97,12 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <silent>ff <cmd>Telescope find_files<cr>
 nnoremap <esc> :noh<cr>
 autocmd BufWrite * :Autoformat
+
+autocmd InsertEnter * :silent !qwer
+autocmd InsertLeave * :silent !qwfp
+autocmd VimEnter * :silent !qwfp
+autocmd VimLeave * :silent !qwer
+
 nnoremap <Tab> <cmd>BufferNext<cr>
 nnoremap <S-Tab> <cmd>BufferPrevious<cr>
 nmap <C-_> <cmd>CommentToggle<cr>
@@ -170,8 +177,8 @@ dap.configurations.rust = {
 		cwd = "${workspaceFolder}",
 		stopOnEntry = false,
 		args = {},
-	},
-}
+		},
+	}
 
 dap.adapters.lldb = function(callback, config)
 callback({ type = "server", host = config.host, port = config.port })

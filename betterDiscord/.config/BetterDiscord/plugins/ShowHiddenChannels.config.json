@@ -1,19 +1,24 @@
 {
-	"blacklist": [],
-	"categorydata": [],
-	"channels": {
-		"GUILD_TEXT": true,
-		"GUILD_VOICE": true,
-		"GUILD_ANNOUNCEMENT": true,
-		"GUILD_STORE": true,
-		"GUILD_STAGE_VOICE": true
-	},
-	"general": {
-		"alwaysCollapse": false,
-		"showVoiceUsers": true,
-		"showForNormal": true
-	},
-	"sortOrder": {
-		"hidden": "extra"
+	"all": {
+		"blacklist": [],
+		"categorydata": [
+			"577909263012462594_hidden",
+			"273534239310479360_hidden"
+		],
+		"channels": {
+			"GUILD_TEXT": true,
+			"GUILD_VOICE": true,
+			"GUILD_ANNOUNCEMENT": true,
+			"GUILD_STORE": true,
+			"GUILD_STAGE_VOICE": true
+		},
+		"general": {
+			"alwaysCollapse": true,
+			"showForNormal": true,
+			"showVoiceUsers": true
+		},
+		"sortOrder": {
+			"hidden": "extra"
+		}
 	}
 }
