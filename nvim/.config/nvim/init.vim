@@ -8,7 +8,6 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'terrortylor/nvim-comment'
-" Plug 'tanvirtin/vgit.nvim'
 " Tabs
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
@@ -19,8 +18,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'luochen1990/rainbow'
-" Autocomplete
-Plug 'ervandew/supertab'
 " Autoclose
 Plug 'jiangmiao/auto-pairs'
 " Rust
@@ -38,7 +35,6 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'Chiel92/vim-autoformat'
-" Plug 'ray-x/lsp_signature.nvim'
 call plug#end()
 
 " Sets
@@ -177,8 +173,8 @@ dap.configurations.rust = {
 		cwd = "${workspaceFolder}",
 		stopOnEntry = false,
 		args = {},
-		},
-	}
+	},
+}
 
 dap.adapters.lldb = function(callback, config)
 callback({ type = "server", host = config.host, port = config.port })
