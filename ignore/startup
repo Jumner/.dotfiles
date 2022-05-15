@@ -9,3 +9,4 @@ screen -dmS eww eww daemon
 eww open-many bar-left bar-middle bar-right
 setxkbmap colemakdh
 redshift -b 1.0:0.7 -l 43.5:-79.7 -t 6500:6500
+noisetorch -i

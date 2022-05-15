@@ -106,6 +106,7 @@
 	 (eventbox :class "volume"
 		:onhover "${eww} update show-volume=true"
 		:onhoverlost "${eww} update show-volume=false"
+		:onclick "firefox https://www.youtube.com/watch?v=5qap5aO4i9A"
 		:orientation "h"
 		:space-evenly false
 		(box :class "volume-inner"

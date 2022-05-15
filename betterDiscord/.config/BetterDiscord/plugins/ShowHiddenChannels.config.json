@@ -2,8 +2,11 @@
 	"all": {
 		"blacklist": [],
 		"categorydata": [
-			"577909263012462594_hidden",
-			"273534239310479360_hidden"
+			"273534239310479360_hidden",
+			"762013638780911688_hidden",
+			"699329370723975168_hidden",
+			"681214731654266884_hidden",
+			"577909263012462594_hidden"
 		],
 		"channels": {
 			"GUILD_TEXT": true,
