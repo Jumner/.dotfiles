@@ -4,11 +4,13 @@
 		"categorydata": [
 			"273534239310479360_hidden",
 			"762013638780911688_hidden",
-			"699329370723975168_hidden",
 			"681214731654266884_hidden",
-			"577909263012462594_hidden"
+			"577909263012462594_hidden",
+			"378294922786242581_hidden",
+			"699329370723975168_hidden"
 		],
 		"channels": {
+			"GUILD_CATEGORY": true,
 			"GUILD_TEXT": true,
 			"GUILD_VOICE": true,
 			"GUILD_ANNOUNCEMENT": true,
@@ -16,12 +18,11 @@
 			"GUILD_STAGE_VOICE": true
 		},
 		"general": {
-			"alwaysCollapse": true,
-			"showForNormal": true,
-			"showVoiceUsers": true
+			"showVoiceUsers": true,
+			"showForNormal": true
 		},
 		"sortOrder": {
-			"hidden": "extra"
+			"hidden": "bottom"
 		}
 	}
 }

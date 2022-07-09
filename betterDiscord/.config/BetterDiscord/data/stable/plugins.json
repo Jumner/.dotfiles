@@ -2,7 +2,7 @@
     "PluginRepo": true,
     "BDFDB": true,
     "ThemeRepo": true,
-    "Animations": true,
+    "Animations": false,
     "ZeresPluginLibrary": true,
     "AvatarsEverywhere": false,
     "BetterCodeblocks": false,

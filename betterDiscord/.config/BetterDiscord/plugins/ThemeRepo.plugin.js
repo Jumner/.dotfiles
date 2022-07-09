@@ -2,7 +2,7 @@
  * @name ThemeRepo
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.2.9
+ * @version 2.3.5
  * @description Allows you to download all Themes from BD's Website within Discord
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,7 +17,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "ThemeRepo",
 			"author": "DevilBro",
-			"version": "2.2.9",
+			"version": "2.3.5",
 			"description": "Allows you to download all Themes from BD's Website within Discord"
 		}
 	};
@@ -129,7 +129,7 @@ module.exports = (_ => {
 			filterThemes() {
 				let themes = grabbedThemes.map(theme => {
 					const installedTheme = _this.getInstalledTheme(theme);
-					const state = installedTheme ? (theme.version && BDFDB.NumberUtils.compareVersions(theme.version, _this.getString(installedTheme.version)) ? themeStates.OUTDATED : themeStates.INSTALLED) : themeStates.DOWNLOADABLE;
+					const state = installedTheme ? (theme.version && _this.compareVersions(theme.version, _this.getString(installedTheme.version)) ? themeStates.OUTDATED : themeStates.INSTALLED) : themeStates.DOWNLOADABLE;
 					return Object.assign(theme, {
 						search: [theme.name, theme.version, theme.authorname, theme.description, theme.tags].flat(10).filter(n => typeof n == "string").join(" ").toUpperCase(),
 						description: theme.description || "No Description found",
@@ -337,12 +337,15 @@ module.exports = (_ => {
 						break;
 				}
 			}
-			createThemeFile(name, filename, body) {
+			createThemeFile(name, filename, body, autoloadKey) {
 				return new Promise(callback => BDFDB.LibraryRequires.fs.writeFile(BDFDB.LibraryRequires.path.join(BDFDB.BDUtils.getThemesFolder(), filename), body, error => {
-					if (error) BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("save_fail", `Theme "${name}"`), {type: "danger"});
+					if (error) {
+						callback(true);
+						BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("save_fail", `Theme "${name}"`), {type: "danger"});
+					}
 					else {
 						BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("save_success", `Theme "${name}"`), {type: "success"});
-						if (_this.settings.general.rnmStart) BDFDB.TimeUtils.timeout(_ => {
+						if (_this.settings.general[autoloadKey]) BDFDB.TimeUtils.timeout(_ => {
 							if (BDFDB.BDUtils.isThemeEnabled(name) == false) {
 								BDFDB.BDUtils.enableTheme(name, false);
 								BDFDB.LogUtils.log(BDFDB.LanguageUtils.LibraryStringsFormat("toast_plugin_started", name), _this);
@@ -460,11 +463,11 @@ module.exports = (_ => {
 									children: "Download",
 									onClick: _ => {
 										if (this.props.currentGeneratorIsNative) {
-											this.createThemeFile("Discord", "Discord.theme.css", `/**\n * @name Discord\n * @description Allow you to easily customize Discord's native Look  \n * @author DevilBro\n * @version 1.0.0\n * @authorId 278543574059057154\n * @invite Jx3TjNS\n * @donate https://www.paypal.me/MircoWittrien\n * @patreon https://www.patreon.com/MircoWittrien\n */\n\n` + this.generateTheme(nativeCSSvars));
+											this.createThemeFile("Discord", "Discord.theme.css", `/**\n * @name Discord\n * @description Allow you to easily customize Discord's native Look  \n * @author DevilBro\n * @version 1.0.0\n * @authorId 278543574059057154\n * @invite Jx3TjNS\n * @donate https://www.paypal.me/MircoWittrien\n * @patreon https://www.patreon.com/MircoWittrien\n */\n\n` + this.generateTheme(nativeCSSvars), "startDownloaded");
 										}
 										else {
 											let generatorTheme = generatorThemes.find(t => t.id == this.props.currentGenerator);
-											if (generatorTheme) this.createThemeFile(generatorTheme.name, generatorTheme.name + ".theme.css", this.generateTheme(generatorTheme.fullCSS));
+											if (generatorTheme) this.createThemeFile(generatorTheme.name, generatorTheme.name + ".theme.css", this.generateTheme(generatorTheme.fullCSS), "startDownloaded");
 										}
 									}
 								}),
@@ -561,8 +564,8 @@ module.exports = (_ => {
 								plugin: _this,
 								keys: ["general", key],
 								label: _this.defaults.general[key].description,
-								note: key == "rnmStart" && !automaticLoading && "Automatic Loading has to be enabled",
-								disabled: key == "rnmStart" && !automaticLoading,
+								note: _this.defaults.general[key].autoload && !automaticLoading && "Automatic Loading has to be enabled",
+								disabled: _this.defaults.general[key].autoload && !automaticLoading,
 								value: _this.settings.general[key],
 								onChange: value => {
 									_this.settings.general[key] = value;
@@ -623,7 +626,7 @@ module.exports = (_ => {
 								children: "Download",
 								onClick: _ => {
 									BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/_res/ThemeFixer.css", (error, response, body) => {
-										this.createThemeFile("ThemeFixer", "ThemeFixer.theme.css", `/**\n * @name ThemeFixer\n * @description ThemeFixerCSS for transparent themes\n * @author DevilBro\n * @version 1.0.3\n * @authorId 278543574059057154\n * @invite Jx3TjNS\n * @donate https://www.paypal.me/MircoWittrien\n * @patreon https://www.patreon.com/MircoWittrien\n */\n\n` + this.createFixerCSS(body));
+										this.createThemeFile("ThemeFixer", "ThemeFixer.theme.css", `/**\n * @name ThemeFixer\n * @description ThemeFixerCSS for transparent themes\n * @author DevilBro\n * @version 1.0.3\n * @authorId 278543574059057154\n * @invite Jx3TjNS\n * @donate https://www.paypal.me/MircoWittrien\n * @patreon https://www.patreon.com/MircoWittrien\n */\n\n` + this.createFixerCSS(body), "startDownloaded");
 									});
 								}
 							}),
@@ -645,7 +648,6 @@ module.exports = (_ => {
 				if (this.props.data.thumbnailUrl && !this.props.data.thumbnailChecked) {
 					if (!window.Buffer) this.props.data.thumbnailChecked = true;
 					else BDFDB.LibraryRequires.request(this.props.data.thumbnailUrl, {encoding: null}, (error, response, body) => {
-						this.props.data.thumbnailChecked = true;
 						if (response && response.headers["content-type"] && response.headers["content-type"] == "image/gif") {
 							const throwAwayImg = new Image(), instance = this;
 							throwAwayImg.onload = function() {
@@ -655,17 +657,24 @@ module.exports = (_ => {
 									const oldUrl = instance.props.data.thumbnailUrl;
 									instance.props.data.thumbnailUrl = canvas.toDataURL("image/png");
 									instance.props.data.thumbnailGifUrl = oldUrl;
+									instance.props.data.thumbnailChecked = true;
 									BDFDB.ReactUtils.forceUpdate(instance);
-								} catch(err) {
+								}
+								catch (err) {
+									instance.props.data.thumbnailChecked = true;
 									BDFDB.ReactUtils.forceUpdate(instance);
 								}
 							};
 							throwAwayImg.onerror = function() {
+								instance.props.data.thumbnailChecked = true;
 								BDFDB.ReactUtils.forceUpdate(instance);
 							};
 							throwAwayImg.src = "data:" + response.headers["content-type"] + ";base64," + (new Buffer(body).toString("base64"));
 						}
-						else BDFDB.ReactUtils.forceUpdate(this);
+						else {
+							this.props.data.thumbnailChecked = true;
+							BDFDB.ReactUtils.forceUpdate(this);
+						}
 					});
 				}
 				return BDFDB.ReactUtils.createElement("div", {
@@ -680,10 +689,12 @@ module.exports = (_ => {
 										this.props.data.thumbnailUrl && this.props.data.thumbnailChecked && BDFDB.ReactUtils.createElement("img", {
 											className: BDFDB.disCN.discoverycardcover,
 											src: this.props.data.thumbnailUrl,
+											loading: "lazy",
 											onMouseEnter: this.props.data.thumbnailGifUrl && (e => e.target.src = this.props.data.thumbnailGifUrl),
 											onMouseLeave: this.props.data.thumbnailGifUrl && (e => e.target.src = this.props.data.thumbnailUrl),
 											onClick: _ => {
 												const url = this.props.data.thumbnailGifUrl || this.props.data.thumbnailUrl;
+												console.log(this.props.data);
 												const img = document.createElement("img");
 												img.addEventListener("load", function() {
 													BDFDB.LibraryModules.ModalUtils.openModal(modalData => {
@@ -726,6 +737,7 @@ module.exports = (_ => {
 											children: this.props.data.author && this.props.data.author.discord_avatar_hash && this.props.data.author.discord_snowflake && !this.props.data.author.discord_avatar_failed ? BDFDB.ReactUtils.createElement("img", {
 												className: BDFDB.DOMUtils.formatClassName(BDFDB.disCN.discoverycardicon, !this.props.data.author.discord_avatar_loaded && BDFDB.disCN.discoverycardiconloading),
 												src: `https://cdn.discordapp.com/avatars/${this.props.data.author.discord_snowflake}/${this.props.data.author.discord_avatar_hash}.webp?size=128`,
+												loading: "lazy",
 												onLoad: _ => {
 													this.props.data.author.discord_avatar_loaded = true;
 													BDFDB.ReactUtils.forceUpdate(this);
@@ -862,16 +874,31 @@ module.exports = (_ => {
 													installed: this.props.data.state == themeStates.INSTALLED,
 													outdated: this.props.data.state == themeStates.OUTDATED,
 													onDownload: _ => {
-														list && BDFDB.LibraryRequires.request(this.props.data.rawSourceUrl, (error, response, body) => {
-															if (error) BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("download_fail", `Theme "${this.props.data.name}"`), {type: "danger"});
-															else list.createThemeFile(this.props.data.name, this.props.data.rawSourceUrl.split("/").pop(), body).then(_ => {
-																this.props.data.state = themeStates.INSTALLED;
-																BDFDB.ReactUtils.forceUpdate(this);
+														if (!list || this.props.downloading) return;
+														this.props.downloading = true;
+														let loadingToast = BDFDB.NotificationUtils.toast(`${BDFDB.LanguageUtils.LibraryStringsFormat("loading", this.props.data.name)} - ${BDFDB.LanguageUtils.LibraryStrings.please_wait}`, {timeout: 0, ellipsis: true});
+														let autoloadKey = this.props.data.state == themeStates ? "startUpdated" : "startDownloaded";
+														BDFDB.LibraryRequires.request(this.props.data.rawSourceUrl, (error, response, body) => {
+															if (error) {
+																delete this.props.downloading;
+																loadingToast.close();
+																BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("download_fail", `Theme "${this.props.data.name}"`), {type: "danger"});
+															}
+															else list.createThemeFile(this.props.data.name, this.props.data.rawSourceUrl.split("/").pop(), body, autoloadKey).then(error2 => {
+																delete this.props.downloading;
+																loadingToast.close();
+																if (!error2) {
+																	this.props.data.state = themeStates.INSTALLED;
+																	BDFDB.ReactUtils.forceUpdate(this);
+																}
 															});
 														});
 													},
 													onDelete: _ => {
+														if (this.props.deleting) return;
+														this.props.deleting = true;
 														BDFDB.LibraryRequires.fs.unlink(BDFDB.LibraryRequires.path.join(BDFDB.BDUtils.getThemesFolder(), this.props.data.rawSourceUrl.split("/").pop()), error => {
+															delete this.props.deleting;
 															if (error) BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("delete_fail", `Theme "${this.props.data.name}"`), {type: "danger"});
 															else {
 																BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("delete_success", `Theme "${this.props.data.name}"`));
@@ -909,7 +936,7 @@ module.exports = (_ => {
 					],
 					onClick: _ => {
 						if (this.props.doDelete) typeof this.props.onDelete == "function" && this.props.onDelete();
-						else typeof this.props.onDownload == "function" && this.props.onDownload();
+						else if (!this.props.installed) typeof this.props.onDownload == "function" && this.props.onDownload();
 					},
 					onMouseEnter: this.props.installed ? (_ => {
 						this.props.doDelete = true;
@@ -1052,9 +1079,10 @@ module.exports = (_ => {
 
 				this.defaults = {
 					general: {
-						notifyOutdated:		{value: true, 	description: "Get a Notification when one of your Themes is outdated"},
-						notifyNewEntries:	{value: true, 	description: "Get a Notification when there are new Entries in the Repo"},
-						rnmStart:			{value: true, 	description: "Start Theme after Download"}
+						notifyOutdated:		{value: true, 	autoload: false,	description: "Get a Notification when one of your Themes is outdated"},
+						notifyNewEntries:	{value: true, 	autoload: false,	description: "Get a Notification when there are new Entries in the Repo"},
+						startDownloaded:	{value: false, 	autoload: true,		description: "Start new Themes after Download"},
+						startUpdated:		{value: false, 	autoload: true,		description: "Start updated Themes after Download"}
 					},
 					filters: {
 						updated: 			{value: true,	description: "Updated"},
@@ -1360,7 +1388,7 @@ module.exports = (_ => {
 								if (version) theme.version = version;
 								if (theme.version) {
 									const installedTheme = this.getInstalledTheme(theme);
-									if (installedTheme && BDFDB.NumberUtils.compareVersions(version, this.getString(installedTheme.version))) outdatedEntries++;
+									if (installedTheme && this.compareVersions(version, this.getString(installedTheme.version))) outdatedEntries++;
 								}
 								let text = body.trim();
 								let hasMETAline = text.replace(/\s/g, "").indexOf("//META{"), newMeta = "";
@@ -1444,6 +1472,10 @@ module.exports = (_ => {
 					else if (Array.isArray(obj.props.children)) for (let c of obj.props.children) string += typeof c == "string" ? c : this.getString(c);
 				}
 				return string;
+			}
+
+			compareVersions (v1, v2) {
+				return !(v1 == v2 || !BDFDB.NumberUtils.compareVersions(v1, v2));
 			}
 			
 			getInstalledTheme (theme) {
