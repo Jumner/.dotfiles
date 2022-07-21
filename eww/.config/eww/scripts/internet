@@ -1,2 +1,2 @@
-[ $(cat /sys/class/net/enp30s0/operstate) = up ] && echo "true" && exit
+(sudo iwctl station wlan0 show | grep State | grep -q " connected") && echo "true" && exit
 echo "false"

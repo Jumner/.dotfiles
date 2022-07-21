@@ -1,4 +1,4 @@
-(defvar icons "/usr/share/icons/ePapirus-Dark/")
+(defvar icons "/usr/share/icons/Papirus-Dark")
 	(defvar eww "eww")
 (defvar show_date false)
 	(defpoll time
@@ -82,7 +82,7 @@
 		 (button		:class "sus"
 			:tooltip "Application Menu"
 			:onclick "alacritty"
-			(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/among-us.svg"))
+			(image :path "/usr/share/icons/Papirus-Dark/32x32/apps/among-us.svg"))
 		 (revealer	:transition "slideright"
 			:reveal power
 			:duration "550ms"
@@ -91,27 +91,29 @@
 			 (button :class "off-button"
 				:tooltip "Shutdown"
 				:onclick "shutdown now"
-				(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/system-shutdown.svg"))
+				(image :path "/usr/share/icons/Papirus-Dark/32x32/apps/system-shutdown.svg"))
 			 (button		:class "reboot-button"
 				:tooltip "Reboot"
 				:onclick "reboot"
-				(image :path "/usr/share/icons/ePapirus-Dark/32x32/apps/system-reboot.svg"))
+				(image :path "/usr/share/icons/Papirus-Dark/32x32/apps/system-reboot.svg"))
 			)))))
 
 				(defpoll volume
 				 :interval "1s"
 				 "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{print $2}' | tr -d '%'")
+
 (defvar show-volume false)
 	(defwidget volume[]
-	 (eventbox :class "volume"
+	 (eventbox :class "volume wide"
 		:onhover "${eww} update show-volume=true"
 		:onhoverlost "${eww} update show-volume=false"
-		:onclick "firefox https://www.youtube.com/watch?v=5qap5aO4i9A"
 		:orientation "h"
 		:space-evenly false
-		(box :class "volume-inner"
+		(box :class "wide-inner"
 		 :space-evenly false
-		 ""
+		 (eventbox
+			:onclick "firefox https://www.youtube.com/watch?v=5qap5aO4i9A"
+			"")
 		 (revealer :reveal {show-volume}
 			:duration "500ms"
 			:transition "slideright"
@@ -128,6 +130,38 @@
 		)
 		)
 
+		(defpoll brightness
+		 :interval "60s"
+		 "cat /sys/class/backlight/amdgpu_bl0/brightness")
+
+(defvar show-brightness false)
+	(defwidget brightness[]
+	 (eventbox :class "wide brightness"
+		:onhover "${eww} update show-brightness=true"
+		:onhoverlost "${eww} update show-brightness=false"
+		:orientation "h"
+		:space-evenly false
+		(box :class "wide-inner"
+		 :space-evenly false
+		 (eventbox
+			:class "feather"
+			:onclick "scripts/toggleKeyboard"
+			"☀️")
+		 (revealer :reveal {show-brightness}
+			:duration "500ms"
+			:transition "slideright"
+			(scale
+			 :value brightness
+			 :onchange "scripts/brightness {}"
+			 :orientation "h"
+			 :tooltip "☀️ ${brightness}"
+			 :min 0
+			 :max 255
+			)
+		 )
+		)
+		)
+		)
 		(defpoll focused-window
 		 :interval "1s"
 		 "ps -p $(xdotool getwindowfocus getwindowpid) -o comm=")
@@ -141,22 +175,28 @@
 
 		(defwidget metric [value ?label class]
 		 (box :class "metric ${class}"
+			:tooltip "${round(value,0)}%"
 			:orientation "h"
 			:space-evenly false
 			(box label)
 			(scale
-			 :min 0
-			 :max 100
 			 :value value)))
 		(defpoll internet
 		 :interval "60s"
 		 "scripts/internet")
 		(defwidget net[]
-		 (image :path {internet ? "/usr/share/icons/ePapirus-Dark/32x32/status/online.svg" : "/usr/share/icons/ePapirus-Dark/32x32/status/offline.svg"})
+		 (image :path {internet ? "/usr/share/icons/Papirus-Dark/32x32/status/online.svg" : "/usr/share/icons/Papirus-Dark/32x32/status/offline.svg"})
 		)
+		(defpoll battery
+		 :interval "1s"
+		 "scripts/bat capacity")
+		(defpoll bat_icon
+		 :interval "1s"
+		 "scripts/bat icon")
 		(defwidget sys []
 		 (box
 			:space-evenly false
+			(metric :value {battery} :label {bat_icon} :class "bat")
 			(metric :value {EWW_RAM.used_mem_perc} :label "" :class "ram")
 			(metric :value {EWW_CPU.avg} :label "" :class "cpu")
 			(net)
@@ -176,27 +216,13 @@
 			(box :class "right"
 			 :space-evenly false
 			 :halign "end"
+			 (brightness)
 			 (volume)
 			 (sys)
 			 (time)
 			)
 		 )
 		)
-
-		 (defwindow bar-left
-			:monitor 1
-			:geometry (geometry
-				:x "0px"
-				:y "0px"
-				:width "100%"
-				:height "55px"
-				:anchor "top center")
-			:stacking "fg"
-			:reserve (struts :distance "55px" :side "top")
-			:windowtype "dock"
-			:wm-ignore false
-			(bar :gap 15 :border-radius 20 :monitor 1)
-		 )
 
 		 (defwindow bar-middle
 			:monitor 0
@@ -211,21 +237,6 @@
 			:windowtype "dock"
 			:wm-ignore false
 			(bar :gap 15 :border-radius 20 :monitor 0)
-		 )
-
-		 (defwindow bar-right
-			:monitor 2
-			:geometry (geometry
-				:x "0px"
-				:y "0px"
-				:width "100%"
-				:height "55px"
-				:anchor "top center")
-			:stacking "fg"
-			:reserve (struts :distance "55px" :side "top")
-			:windowtype "dock"
-			:wm-ignore false
-			(bar :gap 15 :border-radius 20 :monitor 2)
 		 )
 
 		 (defwindow main-panel

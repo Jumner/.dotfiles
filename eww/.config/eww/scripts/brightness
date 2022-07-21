@@ -1,0 +1,2 @@
+val=$(echo $1 | awk '{print(int($1))}')
+sudo bash -c "echo $val > /sys/class/backlight/amdgpu_bl0/brightness"

@@ -71,24 +71,46 @@ button.reboot-button:hover {
 
 // Right stuff
 
-// Volume
-.volume {
+// Volume, Brightness
+.feather {
+	font-family: feather;
+}
+.wide {
+	font-family: feather;	
 	font-size: $iconsize;
+}
+
+.brightness {
+	color: $blue;
+}
+.volume {
 	color: $green;
 }
-.volume-inner {
+.wide-inner {
 	margin-right: 30px;
 }
-.volume scale trough {
+.wide scale trough {
 	min-height: 10px;
 	min-width: 150px;
 	margin-right: 0;
 }
-.volume scale trough highlight {
+.wide scale trough highlight {
 	border-radius: 10px;
 	background-color: $green;
 }
+.volume scale trough highlight {
+	background-color: $green;
+}
+.brightness scale trough highlight {
+	background-color: $blue;
+}
 // System
+.bat scale trough highlight {
+	background-color: $green;
+}
+.bat scale slider {
+	background-color: $green;
+}
 .cpu scale trough highlight {
 	background-color: $cyan;
 }
@@ -103,6 +125,9 @@ button.reboot-button:hover {
 }
 .cpu, .ram {
 	font-size: $iconsize;
+}
+.bat {
+	font-size: 20px;
 }
 // Time
 .time {
