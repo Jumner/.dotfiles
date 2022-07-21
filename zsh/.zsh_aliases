@@ -1,3 +1,4 @@
 alias yayy='yay --noconfirm'
 alias qwfp='setxkbmap us'
 alias qwer='setxkbmap colemakdh'
+alias wallpaper='nitrogen --random --set-zoom-fill ~/bg/single'
