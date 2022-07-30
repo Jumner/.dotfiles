@@ -8,5 +8,4 @@ screen -dmS eww eww daemon
 eww open bar-middle
 setxkbmap colemakdh
 noisetorch -i
-nitrogen --restore
 nitrogen --random --set-zoom-fill /home/jumner/bg/single
