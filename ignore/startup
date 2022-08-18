@@ -9,3 +9,4 @@ eww open bar-middle
 setxkbmap colemakdh
 noisetorch -i
 nitrogen --random --set-zoom-fill /home/jumner/bg/single
+emacs --daemon &

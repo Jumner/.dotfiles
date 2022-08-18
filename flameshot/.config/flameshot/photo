@@ -1,0 +1,7 @@
+#!/bin/bash
+PHOTO=phone_$(date '+%F_%T').png
+kdeconnect-cli -d 8d53fcad857785f9 --photo /tmp/$PHOTO
+while ! test -f "/tmp/$PHOTO"; do
+sleep 0.1
+done
+xclip -selection clipboard -t image/png < /tmp/$PHOTO

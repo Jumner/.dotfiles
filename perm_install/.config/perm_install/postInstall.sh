@@ -17,3 +17,8 @@ mv .zshrc.pre-oh-my-zsh .zshrc
 
 # Vim Plug
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Rust-analyzer
+git clone https://github.com/rust-lang/rust-analyzer.git 
+cd rust-analyzer
+cargo xtask install --server
