@@ -45,6 +45,14 @@ button.reboot-button:hover {
 	background-color: $yellow;
 }
 
+button.suspend-button {
+	color: $blue;
+}
+button.suspend-button:hover {
+	color: white;
+	background-color: $blue
+}
+
 // Workspaces
 .workspaces {
 	font-weight: bold;
@@ -76,8 +84,8 @@ button.reboot-button:hover {
 	font-family: feather;
 }
 .wide {
-	font-family: feather;	
-	font-size: 25px;
+	font-family: feather;
+	font-size: 20px;
 }
 
 .brightness {

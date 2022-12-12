@@ -1,7 +1,7 @@
 {
 	"all": {
 		"general": {
-			"byNewlines": true
+			"byNewlines": false
 		}
 	}
 }

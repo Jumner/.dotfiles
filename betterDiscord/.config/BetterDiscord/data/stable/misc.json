@@ -1,5 +1,5 @@
 {
-    "version": "1.5.3",
+    "version": "1.8.0",
     "drawerStates": {
         "settings": {
             "addons": true,
@@ -9,5 +9,5 @@
             "developer": true
         }
     },
-    "emoteVersion": "v1.5.3"
+    "emoteVersion": "v1.6.3"
 }

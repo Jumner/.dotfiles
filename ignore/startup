@@ -1,12 +1,3 @@
-#!/bin/sh
-sh $HOME/.screenlayout/monitor.sh
-screen -dmS picom picom
-screen -dmS dunst dunst
-screen -dmS kde kdeconnect-indicator &
-screen -dmS discord discord --start-minimized
-screen -dmS eww eww daemon
-eww open bar-middle
-setxkbmap colemakdh
-noisetorch -i
-nitrogen --random --set-zoom-fill /home/jumner/bg/single
+#!/bin/zsh
 emacs --daemon &
+wpa_sup

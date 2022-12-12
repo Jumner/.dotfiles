@@ -16,7 +16,7 @@
 			"Startpage": false,
 			"UrbanDictionary": true,
 			"Whoogle": false,
-			"WolframAlpha": true,
+			"WolframAlpha": false,
 			"Yahoo": false,
 			"Yandex": false,
 			"YouTube": true,

@@ -45,32 +45,6 @@
 		(defwidget day []
 		 day
 		)
-		(defwidget workspace-button [?workspace]
-		 (button :class "workspace-button" :onclick "scripts/./interface set -w ${workspace}" "${workspace}"))
-(defvar workspace false)
-	(defwidget workspaces []
-	 (eventbox :class "workspaces"
-		:onhover "${eww} update workspace=true"
-		:onhoverlost "${eww} update workspace=false"
-		(box
-		 :orientation "h"
-		 :space-evenly false
-		 :vexpand false
-		 :tooltip "Change Workspaces"
-		 "Workspaces"
-		 (revealer
-			:transition "slideright"
-			:reveal workspace
-			(box
-			 :orientation "h"
-			 :space-evenly false
-			 (workspace-button :workspace "1")
-			 (workspace-button :workspace "2")
-			 (workspace-button :workspace "3")
-			 (workspace-button :workspace "4")
-			 (workspace-button :workspace "5")
-			)
-		 ))))
 (defvar power false)
 	(defwidget power-menu []
 	 (eventbox	:onhover "${eww} update power=true"
@@ -96,6 +70,10 @@
 				:tooltip "Reboot"
 				:onclick "reboot"
 				(image :path "/usr/share/icons/Papirus-Dark/32x32/apps/system-reboot.svg"))
+			 (button		:class "suspend-button"
+				:tooltip "Suspend"
+				:onclick "systemctl suspend"
+				(image :path "/usr/share/icons/Papirus-Dark/32x32/apps/system-suspend.svg"))
 			)))))
 
 				(defpoll volume
@@ -113,7 +91,10 @@
 		 :space-evenly false
 		 (eventbox
 			:onclick "firefox https://www.youtube.com/watch?v=5qap5aO4i9A"
-			"")
+			(image
+			 :path {volume == 0.0 ? "images/volume-x.svg" :"images/volume-2.svg"  }
+			 :image-width 24
+			 :image-height 24))
 		 (revealer :reveal {show-volume}
 			:duration "500ms"
 			:transition "slideright"
@@ -130,9 +111,7 @@
 		)
 		)
 
-		(defpoll brightness
-		 :interval "60s"
-		 "cat /sys/class/backlight/amdgpu_bl0/brightness")
+		(defvar brightness "")
 
 (defvar show-brightness false)
 	(defwidget brightness[]
@@ -146,107 +125,109 @@
 		 (eventbox
 			:class "feather"
 			:onclick "scripts/toggleKeyboard"
-			"☀️")
+			(image
+			 :path "images/sun.svg"
+			 :image-width 24
+			 :image-height 24))
 		 (revealer :reveal {show-brightness}
 			:duration "500ms"
 			:transition "slideright"
 			(scale
+			 :round-digits 0
 			 :value brightness
 			 :onchange "scripts/brightness {}"
 			 :orientation "h"
-			 :tooltip "☀️ ${brightness}"
+			 :tooltip "☀️  ${brightness}"
 			 :min 0
 			 :max 255
 			)
 		 )
-		)
-		)
-		)
-		(defpoll focused-window
-		 :interval "1s"
-		 "ps -p $(xdotool getwindowfocus getwindowpid) -o comm=")
+		 )
+		 )
+		 )
+		 (defpoll focused-window
+			:interval "1s"
+			"scripts/window-title")
 
-		(defwidget focus []
-		 (box
-			:class "focus"
-			focused-window
+		 (defwidget focus []
+			(box
+			 :class "focus"
+			 focused-window
 
-		 ))
+			))
 
-		(defwidget metric [value ?label class]
-		 (box :class "metric ${class}"
-			:tooltip "${round(value,0)}%"
-			:orientation "h"
-			:space-evenly false
-			(box label)
-			(scale
-			 :value value)))
-		(defpoll internet
-		 :interval "60s"
-		 "scripts/internet")
-		(defwidget net[]
-		 (image :path {internet ? "/usr/share/icons/Papirus-Dark/32x32/status/online.svg" : "/usr/share/icons/Papirus-Dark/32x32/status/offline.svg"})
-		)
-		(defpoll battery
-		 :interval "1s"
-		 "scripts/bat capacity")
-		(defpoll bat_icon
-		 :interval "1s"
-		 "scripts/bat icon")
-		(defwidget sys []
-		 (box
-			:space-evenly false
-			(metric :value {battery} :label {bat_icon} :class "bat")
-			(metric :value {EWW_RAM.used_mem_perc} :label "" :class "ram")
-			(metric :value {EWW_CPU.avg} :label "" :class "cpu")
-			(net)
-		 ))
-
-		(defwidget bar [?gap border-radius monitor]
-		 (centerbox
-			:class "bar"
-			:width "${1920-2*gap}"
-			:height "40"
-			(box :class "left"
+		 (defwidget metric [value ?label class]
+			(box :class "metric ${class}"
+			 :tooltip "${round(value,0)}%"
+			 :orientation "h"
 			 :space-evenly false
-			 (power-menu)
-			 (workspaces)
-			)
-			(focus)
-			(box :class "right"
+			 (box label)
+			 (scale
+				:value value)))
+		 (defpoll internet
+			:interval "60s"
+			"scripts/internet")
+		 (defwidget net[]
+			(image :path {internet ? "/usr/share/icons/Papirus-Dark/32x32/status/online.svg" : "/usr/share/icons/Papirus-Dark/32x32/status/offline.svg"})
+		 )
+		 (defpoll battery
+			:interval "1s"
+			"scripts/bat capacity")
+		 (defpoll bat_icon
+			:interval "1s"
+			"scripts/bat icon")
+		 (defwidget sys []
+			(box
 			 :space-evenly false
-			 :halign "end"
-			 (brightness)
-			 (volume)
-			 (sys)
-			 (time)
+			 (metric :value {battery} :label {bat_icon} :class "bat")
+			 (metric :value {EWW_RAM.used_mem_perc} :label "" :class "ram")
+			 (metric :value {EWW_CPU.avg} :label "" :class "cpu")
+			 (net)
+			))
+
+		 (defwidget bar [?gap border-radius monitor]
+			(centerbox
+			 :class "bar"
+			 :width "${1920-2*gap}"
+			 :height "40"
+			 (box :class "left"
+				:space-evenly false
+				(power-menu)
+				(brightness)
+				(volume)
+			 )
+			 (focus)
+			 (box :class "right"
+				:space-evenly false
+				:halign "end"
+				(sys)
+				(time)
+			 )
 			)
 		 )
-		)
 
-		 (defwindow bar-middle
-			:monitor 0
-			:geometry (geometry
-				:x "0px"
-				:y "0px"
-				:width "100%"
-				:height "55px"
-				:anchor "top center")
-			:stacking "fg"
-			:reserve (struts :distance "55px" :side "top")
-			:windowtype "dock"
-			:wm-ignore false
-			(bar :gap 15 :border-radius 20 :monitor 0)
-		 )
+			(defwindow bar-middle
+			 :monitor 0
+			 :geometry (geometry
+				 :x "0px"
+				 :y "0px"
+				 :width "100%"
+				 :height "55px"
+				 :anchor "top center")
+			 :stacking "fg"
+			 :exclusive true
+			 :focusable false
+			 (bar :gap 14 :border-radius 20 :monitor 0)
+			)
 
-		 (defwindow main-panel
-			:monitor 0
-			:geometry (geometry
-				:x "0px"
-				:y "0px"
-				:width "100px"
-				:height "100px"
-				)
-			:stacking "fg"
-			:wm-ignore true
-			"hey")
+			(defwindow main-panel
+			 :monitor 0
+			 :geometry (geometry
+				 :x "0px"
+				 :y "0px"
+				 :width "100px"
+				 :height "100px"
+				 )
+			 :stacking "fg"
+			 :wm-ignore true
+			 "hey")

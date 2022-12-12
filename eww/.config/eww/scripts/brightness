@@ -1,2 +1,7 @@
-val=$(echo $1 | awk '{print(int($1))}')
-sudo bash -c "echo $val > /sys/class/backlight/amdgpu_bl0/brightness"
+eww update brightness=$1
+sudo bash -c "echo $1 > /sys/class/backlight/*/brightness"
+if [ $1 -lt 30 ]; then
+~/.config/eww/scripts/toggleKeyboard 1
+else
+~/.config/eww/scripts/toggleKeyboard 0
+fi

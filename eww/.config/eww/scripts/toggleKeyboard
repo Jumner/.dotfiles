@@ -1,4 +1,7 @@
 #!/bin/bash
 bl=$(cat /sys/class/leds/asus::kbd_backlight/brightness)
 set=$((bl ^= 1)) # Why is bash trash
+if [ $1 ]; then
+	set=$1
+fi
 sudo bash -c "echo $set > /sys/class/leds/asus::kbd_backlight/brightness"

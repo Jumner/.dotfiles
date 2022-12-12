@@ -8,7 +8,6 @@
     },
     "addons": {
         "addonErrors": false,
-        "autoReload": true,
         "editAction": "detached"
     },
     "customcss": {

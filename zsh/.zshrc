@@ -3,11 +3,12 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export TERMINAL="/usr/bin/alacritty"
-export PATH="$HOME/.emacs.d/bin:$HOME/.cargo/bin:$PATH"
+export TERMINAL="/usr/bin/wezterm"
+export PATH="$HOME/.emacs.d/bin:$HOME/.cargo/bin:$(yarn global bin):$PATH"
 export NAME_RS_STUDENT_ID=20358217
 export NAME_RS_FIRST="Justin"
 export NAME_RS_LAST="Frank"
+export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/home/jumner/.platformio/packages/framework-arduino-avr/cores/arduino"
 source .auth.sh
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

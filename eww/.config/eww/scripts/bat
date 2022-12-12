@@ -4,37 +4,37 @@ bat=/sys/class/power_supply/BATT/
 per="$(cat "$bat/capacity")"
 
 icon() {
-
-	if [ $(cat "$bat/status") = Charging ]; then
+	status=$(cat "$bat/status")
+	if [[ $status == "Charging" ]]; then
 		icon=""
-			elif [ $(cat "$bat/status") = "Unknown" ]; then
-			icon="🏲"
+	elif [[ $status == "Unknown" ]] || [[ $status == "Not charging" ]]; then
+		icon="🏲"
 	else
 		if [ "$per" -gt "75" ]; then
 			icon=""
-				elif [ "$per" -gt "70" ]; then
-				icon=""
-				elif [ "$per" -gt "65" ]; then
-				icon=""
-				elif [ "$per" -gt "60" ]; then
-				icon=""
-				elif [ "$per" -gt "55" ]; then
-				icon=""
-				elif [ "$per" -gt "50" ]; then
-				icon=""
-				elif [ "$per" -gt "40" ]; then
-				icon=""
-				elif [ "$per" -gt "30" ]; then
-				icon=""
-				elif [ "$per" -gt "20" ]; then
-				icon=""
-				elif [ "$per" -gt "10" ]; then
-				icon=""
+		elif [ "$per" -gt "70" ]; then
+			icon=""
+		elif [ "$per" -gt "65" ]; then
+			icon=""
+		elif [ "$per" -gt "60" ]; then
+			icon=""
+		elif [ "$per" -gt "55" ]; then
+			icon=""
+		elif [ "$per" -gt "50" ]; then
+			icon=""
+		elif [ "$per" -gt "40" ]; then
+			icon=""
+		elif [ "$per" -gt "30" ]; then
+			icon=""
+		elif [ "$per" -gt "20" ]; then
+			icon=""
+		elif [ "$per" -gt "10" ]; then
+			icon=""
 		else
 			icon=""
-				fi
-				fi
-				echo "$icon"
+		fi
+	fi
+	echo "$icon"
 }
 
 percent() {

@@ -1,24 +1,29 @@
 {
 	"all": {
 		"changeLogs": {
-			"BDFDB": "2.3.2",
-			"ChatAliases": "2.3.3",
-			"CopyRawMessage": "1.1.3",
-			"EmojiStatistics": "2.9.8",
-			"ShowHiddenChannels": "3.1.9"
+			"BDFDB": "2.9.8",
+			"CharCounter": "1.6.2",
+			"CopyRawMessage": "1.1.4",
+			"EmojiStatistics": "3.0.0",
+			"FriendNotifications": "1.8.4",
+			"GoogleSearchReplace": "1.3.4",
+			"HideMutedCategories": "1.1.1",
+			"PluginRepo": "2.4.0",
+			"SpellCheck": "1.6.5",
+			"SplitLargeMessages": "1.7.9"
 		},
 		"choices": {
 			"toastPosition": "right"
 		},
 		"general": {
+			"shareData": true,
+			"showSupportBadges": false,
 			"showToasts": true,
-			"showSupportBadges": true,
-			"useChromium": false,
-			"shareData": true
+			"useChromium": false
 		},
 		"hashes": {
-			"0BDFDB.data.json": "9864344b11ab6167e0a79459cc8fbc3fcb029c65",
-			"0BDFDB.raw.css": "96fb638350f77c79c3648050d58a0ea7a700ea1b"
+			"0BDFDB.data.json": "2ffd4982fe6f17e1485441c7fceb36f2af81df54",
+			"0BDFDB.raw.css": "141c8ed61c0a328bfdea5e9491afb0e2bf77530f"
 		}
 	}
 }

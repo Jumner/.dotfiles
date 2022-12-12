@@ -1,0 +1,24 @@
+{
+	"all": {
+		"changeLogs": {
+			"BDFDB": "2.3.2",
+			"ChatAliases": "2.3.3",
+			"CopyRawMessage": "1.1.3",
+			"EmojiStatistics": "2.9.8",
+			"ShowHiddenChannels": "9.9.9"
+		},
+		"choices": {
+			"toastPosition": "right"
+		},
+		"general": {
+			"showToasts": true,
+			"showSupportBadges": true,
+			"useChromium": false,
+			"shareData": true
+		},
+		"hashes": {
+			"0BDFDB.data.json": "0c1e5f9ebe55444c07aaee3cc54251ad8d7d860d",
+			"0BDFDB.raw.css": "98e9c027ef6e97326ac142859216e2f96c20ac4d"
+		}
+	}
+}
