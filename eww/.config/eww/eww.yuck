@@ -164,12 +164,6 @@
 			 (box label)
 			 (scale
 				:value value)))
-		 (defpoll internet
-			:interval "60s"
-			"scripts/internet")
-		 (defwidget net[]
-			(image :path {internet ? "/usr/share/icons/Papirus-Dark/32x32/status/online.svg" : "/usr/share/icons/Papirus-Dark/32x32/status/offline.svg"})
-		 )
 		 (defpoll battery
 			:interval "1s"
 			"scripts/bat capacity")
@@ -182,7 +176,6 @@
 			 (metric :value {battery} :label {bat_icon} :class "bat")
 			 (metric :value {EWW_RAM.used_mem_perc} :label "" :class "ram")
 			 (metric :value {EWW_CPU.avg} :label "" :class "cpu")
-			 (net)
 			))
 
 		 (defwidget bar [?gap border-radius monitor]
@@ -220,14 +213,29 @@
 			 (bar :gap 14 :border-radius 20 :monitor 0)
 			)
 
-			(defwindow main-panel
-			 :monitor 0
+			(defwindow bar-left
+			 :monitor 1
 			 :geometry (geometry
 				 :x "0px"
 				 :y "0px"
-				 :width "100px"
-				 :height "100px"
-				 )
+				 :width "100%"
+				 :height "55px"
+				 :anchor "top center")
 			 :stacking "fg"
-			 :wm-ignore true
-			 "hey")
+			 :exclusive true
+			 :focusable false
+			 (bar :gap 14 :border-radius 20 :monitor 0)
+			)
+			(defwindow bar-right
+			 :monitor 2
+			 :geometry (geometry
+				 :x "0px"
+				 :y "0px"
+				 :width "100%"
+				 :height "55px"
+				 :anchor "top center")
+			 :stacking "fg"
+			 :exclusive true
+			 :focusable false
+			 (bar :gap 14 :border-radius 20 :monitor 0)
+			)

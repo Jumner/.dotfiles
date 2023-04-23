@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export TERMINAL="/usr/bin/wezterm"
-export PATH="$HOME/.emacs.d/bin:$HOME/.cargo/bin:$(yarn global bin):$PATH"
+export PATH="$HOME/.emacs.d/bin:$HOME/.cargo/bin:$(yarn global bin):$HOME/.local/bin:$PATH"
 export NAME_RS_STUDENT_ID=20358217
 export NAME_RS_FIRST="Justin"
 export NAME_RS_LAST="Frank"

@@ -1,3 +1,0 @@
-#!/bin/zsh
-emacs --daemon &
-wpa_sup

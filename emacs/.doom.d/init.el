@@ -339,4 +339,12 @@
           (if (check-expansion)
               (company-complete-common)
             (indent-for-tab-command)))))
+
+
+;; Julia
+
+  (use-package lsp-julia
+  :config
+  ;(setq lsp-julia-default-environment "~/.julia/environments/v1.8")
+	)
 )

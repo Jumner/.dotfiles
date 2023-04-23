@@ -110,7 +110,7 @@ width = (30, 600)
 
 ### Text ###
 
-	font = SFMono 15
+	font = JetBrainsMono 15
 
 # The spacing between lines.  If the height is smaller than the
 # font height, it will get raised to the font height.
